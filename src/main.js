@@ -624,7 +624,7 @@ function mountIntro(container, { onNavigate = () => {} } = {}) {
   const addresses = ['0x30A0', '0x10F8', '0x58C4', '0x2060'];
   container.innerHTML = `
     <section class="ex-intro" aria-label="存储方式探索">
-      <div class="ex-scene-heading"><div><span class="ex-eyebrow">TWO WAYS TO STORE</span><h2>存储方式探索</h2></div><span class="ex-scene-mark">01 / EXPLORE</span></div>
+      <div class="ex-scene-heading"><div><span class="ex-eyebrow">TWO WAYS TO STORE</span><h1>存储方式探索</h1></div><span class="ex-scene-mark">01 / EXPLORE</span></div>
       <div class="ex-intro-grid">
         <article class="ex-story-card ex-story-array">
           <div class="ex-card-heading"><span class="ex-card-number">01</span><div><h3>一排寄存柜</h3><span>顺序表 · 连续存储</span></div><span class="ex-structure-symbol">[ ]</span></div>
@@ -705,7 +705,7 @@ function mountBenchmark(container, { onNavigate = () => {} } = {}) {
   const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   container.innerHTML = `
     <section class="ex-benchmark" aria-label="性能对比沙盘">
-      <div class="ex-scene-heading"><div><span class="ex-eyebrow">OPERATION COUNTS</span><h2>性能对比沙盘</h2></div><span class="ex-scene-mark">04 / COMPARE</span></div>
+      <div class="ex-scene-heading"><div><span class="ex-eyebrow">OPERATION COUNTS</span><h1>性能对比沙盘</h1></div><span class="ex-scene-mark">04 / COMPARE</span></div>
       <div class="ex-bench-controls">
         <div class="ex-operation-tabs" aria-label="对比操作">${[['insert','插入'],['delete','删除'],['read','读取'],['update','修改']].map(([v,t])=>`<button data-bench-operation="${v}" class="${v==='insert'?'ex-active':''}" aria-pressed="${v==='insert'}">${t}</button>`).join('')}</div>
         <div class="ex-scale-control"><label for="ex-size-range">数据规模 <strong data-size-label>1,000</strong></label><input id="ex-size-range" data-size-range type="range" min="10" max="10000" step="10" value="1000" aria-label="数据规模"><div class="ex-range-labels"><span>10</span><span>10,000</span></div></div>
