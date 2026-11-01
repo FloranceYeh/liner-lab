@@ -5,7 +5,7 @@
   "identifier": "top.florance.liner-lab",
   "build": {
     "devUrl": "http://localhost:1420",
-    "frontendDist": "./src/dist",
+    "frontendDist": "../src/dist",
     "beforeDevCommand": "pnpm dev -- --host 127.0.0.1",
     "beforeBuildCommand": "pnpm build"
   },

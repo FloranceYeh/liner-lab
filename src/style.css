@@ -140,11 +140,36 @@ body.tauri .header-actions {
   -webkit-user-select: none;
 }
 
+.brand-container {
+  display: flex;
+  gap: 16px;
+}
+
 .brand {
   display: flex;
   align-items: center;
   gap: 11px;
   flex-shrink: 0
+}
+
+.repo-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+  color: #74858a;
+  font-size: 11px;
+  white-space: nowrap;
+  transition: color .2s;
+}
+
+.repo-link:hover {
+  color: var(--teal);
+}
+
+.github-mark {
+  width: 28px;
+  height: 28px;
 }
 
 .brand-mark {
@@ -1431,7 +1456,7 @@ body.tauri .window-control-divider {
   margin: 0 auto;
   height: 30px;
   padding: 0 28px;
-  font: 9px var(--mono);
+  font: 10px var(--mono);
   letter-spacing: .2px;
   color: #a5b1b5;
   overflow: hidden
@@ -1441,6 +1466,15 @@ body.tauri .window-control-divider {
   font-family: inherit;
   font-size: 10px;
   letter-spacing: 0
+}
+
+.site-footer a {
+  color: #78968f;
+  transition: color .2s;
+}
+
+.site-footer a:hover {
+  color: var(--teal);
 }
 
 .footer-dot {
@@ -1747,6 +1781,10 @@ kbd {
 }
 
 @media(max-width:740px) {
+  .repo-link span {
+    display: none;
+  }
+
   .site-header {
     height: auto;
     min-height: 75px;

@@ -1,3 +1,5 @@
+import { openUrl } from '@tauri-apps/plugin-opener';
+
 (()=>{
 // Pure, immutable snapshots. `slot` is a logical element's visual position;
 // array `cells` separately preserve the copy semantics of each assignment.
@@ -1064,6 +1066,11 @@ function connectManually(from,to){
 }
 
 document.querySelectorAll('[data-module]').forEach(btn=>btn.addEventListener('click',()=>navigate(btn.dataset.module)));
+document.querySelectorAll('[data-external-url]').forEach(link=>link.addEventListener('click',async event=>{
+  if(!window.__TAURI__?.core?.isTauri?.())return;
+  event.preventDefault();
+  try{await openUrl(link.href);}catch(error){console.error('Failed to open external URL',error);}
+}));
 document.querySelector('.brand').addEventListener('click',e=>{e.preventDefault();navigate('array');});
 document.querySelector('#sound-toggle').innerHTML=icon('mute');document.querySelector('#fullscreen-toggle').innerHTML=icon('expand');
 const nativeWindow=window.__TAURI__?.window?.getCurrentWindow?.();
