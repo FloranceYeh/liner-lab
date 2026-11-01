@@ -10,6 +10,7 @@
     "beforeBuildCommand": "pnpm build"
   },
   "app": {
+    "withGlobalTauri": true,
     "windows": [
       {
         "title": "liner-lab",
@@ -18,6 +19,7 @@
         "minWidth": 900,
         "minHeight": 830,
         "resizable": true,
+        "decorations": false,
         "fullscreen": false
       }
     ],

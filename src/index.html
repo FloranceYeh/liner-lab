@@ -12,7 +12,7 @@
 </head>
 
 <body>
-  <header class="site-header">
+  <header class="site-header" data-tauri-drag-region>
     <a class="brand" href="#array" aria-label="线性之间首页">
       <span class="brand-mark">
         <img src="/logo.svg">
@@ -28,11 +28,20 @@
     <div class="header-actions"><button id="sound-toggle" class="icon-button" aria-label="开启交互音效" title="交互音效"
         aria-pressed="false"></button><button id="fullscreen-toggle" class="icon-button" aria-label="全屏演示"
         title="全屏演示"></button><span class="header-divider"></span><span class="lab-badge"><span></span>互动实验室</span>
+      <span class="header-divider window-control-divider" aria-hidden="true"></span>
+      <div class="window-controls" id="window-controls" aria-label="窗口控制">
+        <button class="window-control" id="window-minimize" type="button" aria-label="最小化" title="最小化"></button>
+        <button class="window-control" id="window-maximize" type="button" aria-label="最大化" title="最大化"></button>
+        <button class="window-control window-close" id="window-close" type="button" aria-label="关闭窗口" title="关闭窗口"></button>
+      </div>
     </div>
   </header>
   <main id="app" class="app"></main>
-  <footer class="site-footer"><span>LINEAR LAB <span class="footer-dot">·</span> 数据结构可视化</span><span
-      id="keyboard-hints"><kbd>Space</kbd> 播放 / 暂停 <span class="footer-dot">·</span> <kbd>←</kbd><kbd>→</kbd> 单步</span>
+  <footer class="site-footer">
+    <span>LINEAR LAB <span class="footer-dot">·</span> 数据结构可视化 <span class="footer-dot">·</span> © Florance</span>
+    <span id="keyboard-hints">
+      <span class="footer-dot">·</span>
+      <kbd>Space</kbd> 播放 / 暂停 <span class="footer-dot">·</span> <kbd>←</kbd><kbd>→</kbd> 单步</span>
   </footer>
   <div id="toast" class="toast" role="status"></div>
   <script src="main.js"></script>

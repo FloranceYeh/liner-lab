@@ -44,6 +44,18 @@ select {
 }
 
 button,
+summary,
+select,
+input[type="range"],
+[role="button"],
+[role="switch"],
+[role="slider"],
+.ex-structure-symbol {
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+button,
 a,
 input,
 select {
@@ -110,6 +122,22 @@ button:active:not(:disabled) {
   min-height: 0;
   padding: 0 28px;
   gap: 16px
+}
+
+body.tauri .site-header {
+  user-select: none;
+  -webkit-app-region: drag;
+}
+
+body.tauri .site-header > * {
+  -webkit-app-region: no-drag;
+}
+
+body.tauri .brand,
+body.tauri .main-nav,
+body.tauri .header-actions {
+  user-select: none;
+  -webkit-user-select: none;
 }
 
 .brand {
@@ -191,6 +219,53 @@ button:active:not(:disabled) {
   display: flex;
   gap: 10px;
   align-items: center
+}
+
+.window-controls {
+  display: none;
+  align-items: stretch;
+  height: 34px;
+  margin-left: 3px;
+  -webkit-app-region: no-drag;
+  gap: 1px;
+}
+
+body.tauri .window-controls {
+  display: flex;
+}
+
+.window-control-divider {
+  display: none;
+}
+
+body.tauri .window-control-divider {
+  display: block;
+}
+
+.window-control {
+  width: 34px;
+  height: 34px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #68777e;
+  border-radius: 9px;
+  -webkit-app-region: no-drag;
+}
+
+.window-control svg {
+  width: 17px;
+  height: 17px;
+}
+
+.window-control:hover {
+  background: #edf5f2;
+  color: var(--teal);
+}
+
+.window-control.window-close:hover {
+  background: #d94747;
+  color: #fff;
 }
 
 .icon-button {
@@ -788,7 +863,7 @@ button:active:not(:disabled) {
   display: flex;
   align-items: center;
   gap: 10px;
-  font-size: 13px;
+  font-size: 15px;
   font-weight: 600
 }
 
@@ -814,7 +889,7 @@ button:active:not(:disabled) {
   border-radius: 20px;
   background: #f7fcf9;
   padding: 5px 10px;
-  font-size: 10px
+  font-size: 11px
 }
 
 .state-dot {
@@ -842,7 +917,7 @@ button:active:not(:disabled) {
   display: flex;
   align-items: center;
   gap: 18px;
-  font-size: 10px;
+  font-size: 11px;
   color: #8b999f
 }
 
@@ -885,7 +960,7 @@ button:active:not(:disabled) {
   display: flex;
   align-items: center;
   gap: 7px;
-  font: 10px var(--mono);
+  font: 11px var(--mono);
   color: #99a9ae
 }
 
@@ -911,6 +986,14 @@ button:active:not(:disabled) {
 
 .visual-stage text {
   font-family: var(--mono)
+}
+
+.stage-viewport.list-viewport {
+  overflow: auto;
+}
+
+.visual-stage.list {
+  min-height: 324px;
 }
 
 .visual-stage .scene-node {
@@ -965,7 +1048,7 @@ button:active:not(:disabled) {
   flex: 0 0 25px;
   padding: 0 18px 6px;
   color: #a1afb3;
-  font: 9px var(--mono);
+  font: 10px var(--mono);
   min-height: 25px
 }
 

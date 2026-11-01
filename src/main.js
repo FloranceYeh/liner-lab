@@ -399,7 +399,7 @@ class VisualStage {
     cancelAnimationFrame(this.raf); this.timeline = timeline; this.index = index; this.positions.clear(); this.offsets.clear(); this.nodeEls.clear(); this.edgeEls.clear();
     this.background.replaceChildren(); this.ghostLayer.replaceChildren(); this.edgeLayer.replaceChildren(); this.nodesLayer.replaceChildren(); this.foreground.replaceChildren();
     this.nodeCount = Math.max(...timeline.frames.map(f=>f.nodes.filter(n=>n.opacity>0).length));
-    this.viewWidth = this.type==='array'?900:Math.max(900,160+this.nodeCount*154);
+    this.viewWidth = this.type==='array'?900:Math.max(900,200+this.nodeCount*180);
     this.svg.setAttribute('viewBox',`0 0 ${this.viewWidth} ${this.type==='list'?360:340}`);
     this.drawBackground();
     const unique = new Map(); for (const f of timeline.frames) for (const n of f.nodes) if(!unique.has(n.id)) unique.set(n.id,n);
@@ -408,47 +408,47 @@ class VisualStage {
   }
   drawBackground() {
     if(this.type==='array') {
-      this.background.append(svgEl('text',{x:43,y:138,fill:'#abb8bf','font-size':9},'INDEX'));
+      this.background.append(svgEl('text',{x:43,y:138,fill:'#abb8bf','font-size':11},'INDEX'));
       for(let i=0;i<8;i++) {
         const x=48+i*102;
         const slot=svgEl('rect',{x,y:158,width:88,height:78,rx:13,fill:'#f8fafb',stroke:'#e1e8eb','stroke-dasharray':'4 4','data-slot':i});
-        this.background.append(slot,svgEl('text',{x:x+44,y:143,'text-anchor':'middle',fill:'#a5b3ba','font-size':11,'data-index':i},i),svgEl('text',{x:x+44,y:260,'text-anchor':'middle',fill:'#a7b6bc','font-size':9},`0x${(4096+i*4).toString(16).toUpperCase()}`));
+        this.background.append(slot,svgEl('text',{x:x+44,y:143,'text-anchor':'middle',fill:'#a5b3ba','font-size':13,'data-index':i},i),svgEl('text',{x:x+44,y:260,'text-anchor':'middle',fill:'#a7b6bc','font-size':11},`0x${(4096+i*4).toString(16).toUpperCase()}`));
       }
-      this.background.append(svgEl('path',{d:'M 49 280 v 6 H 849 v -6',stroke:'#e0e8e8',fill:'none'}),svgEl('text',{x:450,y:304,'text-anchor':'middle',fill:'#aab8bc','font-size':9,'letter-spacing':1},'CONTIGUOUS MEMORY'));
-      this.trayLabel = svgEl('text',{x:48+this.index*102+44,y:39,'text-anchor':'middle',fill:'#81a696','font-size':9},'NEW');
+      this.background.append(svgEl('path',{d:'M 49 280 v 6 H 849 v -6',stroke:'#e0e8e8',fill:'none'}),svgEl('text',{x:450,y:304,'text-anchor':'middle',fill:'#aab8bc','font-size':11,'letter-spacing':1},'CONTIGUOUS MEMORY'));
+      this.trayLabel = svgEl('text',{x:48+this.index*102+44,y:39,'text-anchor':'middle',fill:'#81a696','font-size':11},'NEW');
       this.background.append(this.trayLabel);
     } else {
       const head=svgEl('g',{'data-node':'head',class:'scene-node head-node',tabindex:0,role:'button','aria-label':'head 哨兵节点'});
-      head.append(svgEl('rect',{x:19,y:185,width:48,height:50,rx:12,fill:'#f4f7f7',stroke:'#dce5e6','stroke-dasharray':'3 3'}),svgEl('text',{x:43,y:213,'text-anchor':'middle',fill:'#81969b','font-size':12},'H'),svgEl('text',{x:43,y:172,'text-anchor':'middle',fill:'#9bafb3','font-size':9},'head'));
-      const port=svgEl('circle',{cx:67,cy:210,r:6,fill:'#fff',stroke:'#a7babf','stroke-width':1.5,'data-port':'head',tabindex:0,role:'button','aria-label':'从 head.next 连线',class:'node-port'});
+      head.append(svgEl('rect',{x:18,y:137,width:62,height:60,rx:13,fill:'#f4f7f7',stroke:'#dce5e6','stroke-dasharray':'3 3'}),svgEl('text',{x:49,y:174,'text-anchor':'middle',fill:'#81969b','font-size':16},'H'),svgEl('text',{x:49,y:123,'text-anchor':'middle',fill:'#9bafb3','font-size':11},'head'));
+      const port=svgEl('circle',{cx:80,cy:167,r:8,fill:'#fff',stroke:'#a7babf','stroke-width':1.8,'data-port':'head',tabindex:0,role:'button','aria-label':'从 head.next 连线',class:'node-port'});
       head.append(port); this.headGroup=head; this.background.append(head);
-      this.background.append(svgEl('text',{x:this.viewWidth/2,y:321,'text-anchor':'middle',fill:'#b0bdc0','font-size':9,'letter-spacing':1},'LINKED MEMORY'));
+      this.background.append(svgEl('text',{x:this.viewWidth/2,y:280,'text-anchor':'middle',fill:'#b0bdc0','font-size':11,'letter-spacing':1},'LINKED MEMORY'));
       this.nullTarget=svgEl('g',{'data-null':'true',tabindex:0,role:'button','aria-label':'空指针 null'});
-      this.nullTarget.append(svgEl('rect',{x:this.viewWidth-64,y:191,width:46,height:38,rx:8,fill:'#f7faf9',stroke:'#e1e9e8','stroke-dasharray':'3 3'}),svgEl('text',{x:this.viewWidth-41,y:214,'text-anchor':'middle',fill:'#9aaeb0','font-size':10},'null'));
+      this.nullTarget.append(svgEl('rect',{x:this.viewWidth-76,y:144,width:56,height:46,rx:9,fill:'#f7faf9',stroke:'#e1e9e8','stroke-dasharray':'3 3'}),svgEl('text',{x:this.viewWidth-48,y:173,'text-anchor':'middle',fill:'#9aaeb0','font-size':13},'null'));
       this.background.append(this.nullTarget);
     }
   }
   createNode(node) {
-    const list=this.type==='list', w=list?116:88, h=list?66:78;
+    const list=this.type==='list', w=list?144:88, h=list?80:78;
     const g=svgEl('g',{class:'scene-node','data-node':node.id,tabindex:0,role:'button','aria-label':`数值 ${node.value}`});
     const rect=svgEl('rect',{width:w,height:h,rx:13,filter:'url(#node-shadow)',class:'node-box'});
-    const value=svgEl('text',{x:list?38:44,y:list?40:49,'text-anchor':'middle','font-size':node.value.toString().length>3?22:27,'font-weight':500,class:'node-value'},node.value);
+    const value=svgEl('text',{x:list?48:44,y:list?49:49,'text-anchor':'middle','font-size':node.value.toString().length>3?29:36,'font-weight':500,class:'node-value'},node.value);
     g.append(rect);
     if(list) {
-      g.append(svgEl('line',{x1:77,y1:1,x2:77,y2:h-1,stroke:'#cfddd9','stroke-opacity':.6}),svgEl('text',{x:38,y:15,'text-anchor':'middle','font-size':7,fill:'#9eb3b4'},'data'),svgEl('text',{x:97,y:19,'text-anchor':'middle','font-size':7,fill:'#95a9aa'},'next'));
-      const halo=svgEl('circle',{cx:99,cy:38,r:14,fill:'#68b698','fill-opacity':.16,class:'port-halo'});
-      const port=svgEl('circle',{cx:99,cy:38,r:6,fill:'#fff',stroke:'#87b19f','stroke-width':1.6,'data-port':node.id,class:'node-port',tabindex:0,role:'button','aria-label':`从节点 ${node.value} 的 next 连线`});
-      g.append(halo,port,svgEl('text',{x:58,y:86,'text-anchor':'middle','font-size':8,fill:'#9caeb4'},addressFor(node.id)));
-    } else g.append(svgEl('text',{x:44,y:18,'text-anchor':'middle','font-size':7,fill:'#9bacb5','letter-spacing':1},'DATA'));
+      g.append(svgEl('line',{x1:96,y1:1,x2:96,y2:h-1,stroke:'#cfddd9','stroke-opacity':.6}),svgEl('text',{x:48,y:20,'text-anchor':'middle','font-size':11,fill:'#9eb3b4'},'data'),svgEl('text',{x:120,y:24,'text-anchor':'middle','font-size':11,fill:'#95a9aa'},'next'));
+      const halo=svgEl('circle',{cx:122,cy:46,r:18,fill:'#68b698','fill-opacity':.16,class:'port-halo'});
+      const port=svgEl('circle',{cx:122,cy:46,r:8,fill:'#fff',stroke:'#87b19f','stroke-width':1.8,'data-port':node.id,class:'node-port',tabindex:0,role:'button','aria-label':`从节点 ${node.value} 的 next 连线`});
+      g.append(halo,port,svgEl('text',{x:72,y:105,'text-anchor':'middle','font-size':11,fill:'#9caeb4'},addressFor(node.id)));
+    } else g.append(svgEl('text',{x:44,y:19,'text-anchor':'middle','font-size':12,fill:'#9bacb5','letter-spacing':1},'DATA'));
     const title=svgEl('title',{},`data: ${node.value}`);g.append(value,title);
-    const tag=svgEl('text',{x:w/2,y:-12,'text-anchor':'middle','font-size':9,fill:'#95a6ae',class:'node-tag'});g.append(tag);
+    const tag=svgEl('text',{x:w/2,y:-14,'text-anchor':'middle','font-size':11,fill:'#95a6ae',class:'node-tag'});g.append(tag);
     this.nodesLayer.append(g);this.nodeEls.set(node.id,{g,rect,value,title,tag});
   }
   basePosition(node) {
     if(this.type==='array') return {x:48+(node.slot===-1?this.index:node.slot)*102,y:node.slot===-1?51:158,opacity:node.opacity??1};
-    const step=154,offset=this.offsets.get(node.id)||{x:0,y:0};
-    const prepX=Math.min(this.viewWidth-180,Math.max(103,103+(this.index-.48)*step));
-    return {x:(node.slot===-1?prepX:103+node.slot*step)+offset.x,y:(node.slot===-1?55:177)+(node.offsetY||0)+offset.y,opacity:node.opacity??1};
+    const step=180,offset=this.offsets.get(node.id)||{x:0,y:0};
+    const prepX=Math.min(this.viewWidth-210,Math.max(112,112+(this.index-.48)*step));
+    return {x:(node.slot===-1?prepX:112+node.slot*step)+offset.x,y:(node.slot===-1?13:127)+(node.offsetY||0)+offset.y,opacity:node.opacity??1};
   }
   setFrame(frame,animate=true) {
     cancelAnimationFrame(this.raf);this.frame=frame;this.cancelDrag();
@@ -478,7 +478,7 @@ class VisualStage {
     const c=palettes[node.role]||palettes.normal;
     el.rect.setAttribute('fill',c.fill);el.rect.setAttribute('stroke',c.stroke);el.rect.setAttribute('stroke-width',frame.focusIds.includes(node.id)?1.6:1);
     el.value.setAttribute('fill',c.ink);el.value.textContent=node.value;
-    el.value.setAttribute('font-size',String(node.value).length>3?22:27);
+    el.value.setAttribute('font-size',this.type==='list'?(String(node.value).length>3?29:36):(String(node.value).length>3?25:31));
     el.g.setAttribute('aria-label',`数值 ${node.value}，${node.slot<0?'待插入':`下标 ${node.slot}`}`);
     el.g.setAttribute('tabindex',node.opacity===0?'-1':'0');
     el.g.setAttribute('aria-hidden',String(node.opacity===0));
@@ -521,16 +521,16 @@ class VisualStage {
     }
     for(const [key,obj] of this.edgeEls)if(!obj.seen){obj.path.remove();this.edgeEls.delete(key);}
   }
-  sourcePoint(id){if(id==='head')return{x:67,y:210};const p=this.positions.get(id)||{x:100,y:177};return{x:p.x+105,y:p.y+38};}
-  targetPoint(id,source){if(id===null)return{x:this.viewWidth-66,y:210};const p=this.positions.get(id)||{x:100,y:177};return{x:p.x-5,y:p.y+33};}
+  sourcePoint(id){if(id==='head')return{x:80,y:167};const p=this.positions.get(id)||{x:112,y:127};return{x:p.x+122,y:p.y+46};}
+  targetPoint(id,source){if(id===null)return{x:this.viewWidth-76,y:167};const p=this.positions.get(id)||{x:112,y:127};return{x:p.x-7,y:p.y+40};}
   drawEdges(t=1) {
     if(this.type!=='list')return;
     for(const obj of this.edgeEls.values()) {
       const edge=obj.edge,a=this.sourcePoint(edge.from),oldB=this.targetPoint(obj.old.to,a),newB=this.targetPoint(edge.to,a),b={x:mix(oldB.x,newB.x,t),y:mix(oldB.y,newB.y,t)};
       let d;
-      if(edge.from===edge.to){const p=this.positions.get(edge.from);d=`M${a.x},${a.y} C${a.x+62},${a.y-5} ${a.x+58},${p.y-48} ${p.x+52},${p.y-26} C${p.x+17},${p.y-20} ${p.x-18},${p.y-9} ${p.x-5},${p.y+28}`;}
+      if(edge.from===edge.to){const p=this.positions.get(edge.from);d=`M${a.x},${a.y} C${a.x+72},${a.y-5} ${a.x+68},${p.y-60} ${p.x+64},${p.y-34} C${p.x+20},${p.y-24} ${p.x-23},${p.y-11} ${p.x-7},${p.y+34}`;}
       else if(Math.abs(a.y-b.y)<18&&b.x>a.x) {
-        const bypass=b.x-a.x>175,dy=bypass?-60:0;
+        const bypass=b.x-a.x>205,dy=bypass?-72:0;
         d=`M${a.x},${a.y} C${a.x+(b.x-a.x)*.32},${a.y+dy} ${b.x-(b.x-a.x)*.32},${b.y+dy} ${b.x},${b.y}`;
       } else {const h=Math.max(35,Math.abs(b.x-a.x)*.4);d=`M${a.x},${a.y} C${a.x+h},${a.y} ${b.x-h},${b.y} ${b.x},${b.y}`;}
       obj.path.setAttribute('d',d);
@@ -563,7 +563,7 @@ class VisualStage {
     if(!this.drag)return;const p=this.point(event),d=this.drag;
     if(d.kind==='node'){
       const dx=p.x-d.point.x,dy=p.y-d.point.y;d.moved=d.moved||Math.abs(dx)+Math.abs(dy)>4;
-      const x=Math.max(77,Math.min(this.viewWidth-140,d.start.x+dx)),y=Math.max(29,Math.min(242,d.start.y+dy));
+      const x=Math.max(96,Math.min(this.viewWidth-176,d.start.x+dx)),y=Math.max(12,Math.min(190,d.start.y+dy));
       this.offsets.set(d.id,{x:d.offset.x+x-d.start.x,y:d.offset.y+y-d.start.y});
       const pos={x,y,opacity:d.start.opacity};this.positions.set(d.id,pos);this.paintNode(d.id,pos);this.drawEdges();
     }else{
@@ -574,8 +574,8 @@ class VisualStage {
     }
   }
   findTarget(p){
-    if(Math.abs(p.x-(this.viewWidth-41))<35&&Math.abs(p.y-210)<35)return null;
-    for(const [id,pos] of this.positions){if(pos.opacity>.25&&p.x>=pos.x-20&&p.x<=pos.x+116&&p.y>=pos.y-14&&p.y<=pos.y+80)return id;}
+    if(Math.abs(p.x-(this.viewWidth-48))<42&&Math.abs(p.y-167)<42)return null;
+    for(const [id,pos] of this.positions){if(pos.opacity>.25&&p.x>=pos.x-22&&p.x<=pos.x+144&&p.y>=pos.y-16&&p.y<=pos.y+96)return id;}
     return undefined;
   }
   pointerUp(event){
@@ -588,7 +588,7 @@ class VisualStage {
       else this.onInspect?.(d.id);
     }
   }
-  highlightPort(id){this.foreground.replaceChildren();const p=this.sourcePoint(id);this.foreground.append(svgEl('circle',{cx:p.x-6,cy:p.y,r:13,fill:'none',stroke:'#2c9c7e','stroke-width':2}));}
+  highlightPort(id){this.foreground.replaceChildren();const p=this.sourcePoint(id);this.foreground.append(svgEl('circle',{cx:p.x,cy:p.y,r:17,fill:'none',stroke:'#2c9c7e','stroke-width':2}));}
   keyDown(event){
     if(this.type!=='list')return;
     const port=event.target.closest('[data-port]'),node=event.target.closest('[data-node]'),empty=event.target.closest('[data-null]');
@@ -603,7 +603,7 @@ class VisualStage {
       event.preventDefault();event.stopPropagation();this.onInteraction?.();
       const id=node.dataset.node,offset=this.offsets.get(id)||{x:0,y:0},position=this.positions.get(id);
       const dx=event.key==='ArrowRight'?12:event.key==='ArrowLeft'?-12:0,dy=event.key==='ArrowDown'?12:event.key==='ArrowUp'?-12:0;
-      offset.x+=Math.max(77,Math.min(this.viewWidth-140,position.x+dx))-position.x;offset.y+=Math.max(29,Math.min(242,position.y+dy))-position.y;
+      offset.x+=Math.max(96,Math.min(this.viewWidth-176,position.x+dx))-position.x;offset.y+=Math.max(12,Math.min(190,position.y+dy))-position.y;
       this.offsets.set(id,offset);this.setFrame(this.frame,false);this.nodeEls.get(id)?.g.focus();
     }
   }
@@ -913,6 +913,10 @@ const icons = {
   shuffle:'<path d="M3 6h3c5 0 7 12 12 12h3m-4-4 4 4-4 4M3 18h3c2.5 0 4.2-3 6-6s3.5-6 6-6h3m-4-4 4 4-4 4"/>',
   code:'<path d="m8 7-5 5 5 5m8-10 5 5-5 5M14 4l-4 16"/>',
   expand:'<path d="M8 3H3v5m13-5h5v5M3 16v5h5m13-5v5h-5"/>',
+  minimize:'<path d="M5 12h14"/>',
+  maximize:'<rect x="5" y="5" width="14" height="14" rx="2"/>',
+  restore:'<rect x="8" y="8" width="11" height="11" rx="1"/><path d="M16 8V5H5v11h3"/>',
+  close:'<path d="m6 6 12 12M18 6 6 18"/>',
   volume:'<path d="m11 4-5 4H3v8h3l5 4ZM15 8a6 6 0 0 1 0 8m3-11a10 10 0 0 1 0 14"/>',
   mute:'<path d="m11 4-5 4H3v8h3l5 4ZM16 9l6 6m0-6-6 6"/>',
   link:'<path d="m9 15 6-6M8 16l-1 1a4 4 0 0 1-6-6l5-5a4 4 0 0 1 6 0m0 12a4 4 0 0 0 6 0l5-5a4 4 0 0 0-6-6l-1 1"/>',
@@ -1062,6 +1066,29 @@ function connectManually(from,to){
 document.querySelectorAll('[data-module]').forEach(btn=>btn.addEventListener('click',()=>navigate(btn.dataset.module)));
 document.querySelector('.brand').addEventListener('click',e=>{e.preventDefault();navigate('array');});
 document.querySelector('#sound-toggle').innerHTML=icon('mute');document.querySelector('#fullscreen-toggle').innerHTML=icon('expand');
+const nativeWindow=window.__TAURI__?.window?.getCurrentWindow?.();
+if(nativeWindow){
+  document.body.classList.add('tauri');
+  const minimizeButton=document.querySelector('#window-minimize');
+  const maximizeButton=document.querySelector('#window-maximize');
+  const closeButton=document.querySelector('#window-close');
+  const syncMaximizeButton=async()=>{
+    const maximized=await nativeWindow.isMaximized();
+    maximizeButton.innerHTML=icon(maximized?'restore':'maximize');
+    maximizeButton.setAttribute('aria-label',maximized?'还原':'最大化');
+    maximizeButton.title=maximized?'还原':'最大化';
+  };
+  minimizeButton.innerHTML=icon('minimize');
+  closeButton.innerHTML=icon('close');
+  minimizeButton.addEventListener('click',()=>nativeWindow.minimize());
+  maximizeButton.addEventListener('click',async()=>{
+    await nativeWindow.toggleMaximize();
+    await syncMaximizeButton();
+  });
+  closeButton.addEventListener('click',()=>nativeWindow.close());
+  nativeWindow.onResized(syncMaximizeButton);
+  syncMaximizeButton();
+}
 document.querySelector('#sound-toggle').addEventListener('click',()=>{sound=!sound;const b=document.querySelector('#sound-toggle');b.setAttribute('aria-pressed',String(sound));b.setAttribute('aria-label',sound?'关闭交互音效':'开启交互音效');b.innerHTML=icon(sound?'volume':'mute');tone();});
 document.querySelector('#fullscreen-toggle').addEventListener('click',async()=>{try{if(document.fullscreenElement)await document.exitFullscreen();else await document.documentElement.requestFullscreen();}catch{notify('可使用浏览器全屏');}});
 window.addEventListener('hashchange',()=>navigate(location.hash.slice(1),false));
