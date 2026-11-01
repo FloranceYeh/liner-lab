@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f6f8f9">
+  <meta name="description" content="顺序表与单链表的交互可视化：逐步移位、指针连线、算法回放与性能对比。">
+  <title>线性之间 · 算法可视化</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" href="public/logo.svg" type="image/svg+xml">
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="#array" aria-label="线性之间首页">
+      <span class="brand-mark"><svg viewBox="0 0 40 40" fill="none" aria-hidden="true"><rect x="7" y="10" width="11" height="11" rx="3" fill="currentColor"/><rect x="23" y="19" width="11" height="11" rx="3" fill="currentColor"/><path d="M18 15.5h10.5V19" stroke="currentColor" stroke-width="2.5"/></svg></span>
+      <span class="brand-name">线性之间<span>LINEAR LAB</span></span>
+    </a>
+    <nav class="main-nav" aria-label="实验模块">
+      <button data-module="intro"><span class="nav-icon" data-icon="compass"></span>概念漫游</button>
+      <button data-module="array" class="active"><span class="nav-icon" data-icon="array"></span>顺序表</button>
+      <button data-module="list"><span class="nav-icon" data-icon="nodes"></span>单链表</button>
+      <button data-module="benchmark"><span class="nav-icon" data-icon="chart"></span>性能对比</button>
+    </nav>
+    <div class="header-actions"><button id="sound-toggle" class="icon-button" aria-label="开启交互音效" title="交互音效" aria-pressed="false"></button><button id="fullscreen-toggle" class="icon-button" aria-label="全屏演示" title="全屏演示"></button><span class="header-divider"></span><span class="lab-badge"><span></span>互动实验室</span></div>
+  </header>
+  <main id="app" class="app"></main>
+  <footer class="site-footer"><span>LINEAR LAB <span class="footer-dot">·</span> 数据结构可视化</span><span id="keyboard-hints"><kbd>Space</kbd> 播放 / 暂停 <span class="footer-dot">·</span> <kbd>←</kbd><kbd>→</kbd> 单步</span></footer>
+  <div id="toast" class="toast" role="status"></div>
+  <script src="main.js"></script>
+</body>
+</html>
