@@ -1073,6 +1073,7 @@ document.querySelectorAll('[data-external-url]').forEach(link=>link.addEventList
 }));
 document.querySelector('.brand').addEventListener('click',e=>{e.preventDefault();navigate('array');});
 document.querySelector('#sound-toggle').innerHTML=icon('mute');document.querySelector('#fullscreen-toggle').innerHTML=icon('expand');
+if(/Android|iPhone|iPad|iPod/i.test(navigator.userAgent))document.body.classList.add('mobile-app');
 const nativeWindow=window.__TAURI__?.window?.getCurrentWindow?.();
 if(nativeWindow){
   document.body.classList.add('tauri');
@@ -1105,6 +1106,6 @@ document.addEventListener('keydown',e=>{
   if(e.code==='Space'){e.preventDefault();togglePlay();}else if(e.key==='ArrowRight'){e.preventDefault();stop();setFrame(frameIndex+1);}else if(e.key==='ArrowLeft'){e.preventDefault();stop();setFrame(frameIndex-1);}else if(e.key.toLowerCase()==='r'){stop();setFrame(0);}
 });
 document.addEventListener('visibilitychange',()=>{if(document.hidden)stop();});
-navigate(location.hash.slice(1)||'array',false);
+navigate(location.hash.slice(1)||'intro',false);
 
 })();

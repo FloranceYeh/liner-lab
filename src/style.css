@@ -2191,6 +2191,7 @@ kbd {
   }
 }
 
+
 @media(prefers-reduced-transparency:reduce) {
 
   .site-header,
@@ -2237,6 +2238,7 @@ kbd {
     grid-column: 1/-1
   }
 }
+
 
 .ex-intro,
 .ex-benchmark {
@@ -3598,5 +3600,67 @@ kbd {
   .ex-intro *,
   .ex-benchmark * {
     transition: none !important
+  }
+}
+
+/* Mobile WebView scrolling overrides */
+@media(max-width:740px) {
+  html { height: auto; min-height: 100%; overflow-x: hidden; overflow-y: auto }
+  body { display: flex; flex-direction: column; height: auto; min-height: 100vh; min-height: 100dvh; overflow: visible }
+  .site-header { flex: 0 0 auto }
+  .app { flex: 1 0 auto; height: auto; min-height: 0; overflow: visible; padding-bottom: 22px }
+  .workspace { flex: 0 0 auto; min-height: 0 }
+  .control-panel { overflow: visible }
+  .main-column { grid-template-rows: auto auto; min-height: 0 }
+  .stage-viewport { flex: 0 0 288px; min-height: 288px }
+  .detail-grid { height: auto; min-height: 0 }
+  .site-footer { flex: 0 0 auto; height: auto; min-height: 30px; padding-top: 7px; padding-bottom: 7px; gap: 5px; flex-wrap: wrap }
+  .ex-benchmark { height: auto; min-height: 0; overflow: visible }
+  .ex-comparison-grid { grid-template-columns: 1fr }
+  .ex-bench-panel { height: auto; min-height: 0; overflow: visible }
+}
+
+/* Native mobile WebView has no desktop window or fullscreen controls. */
+body.mobile-app #fullscreen-toggle,
+body.mobile-app .window-controls,
+body.mobile-app .window-control-divider {
+  display: none
+}
+
+@media(max-width:740px) {
+  .site-header {
+    padding-top: 36px;
+  }
+
+  .site-footer {
+    padding-bottom: 32px;
+  }
+
+  .page-heading,
+  .ex-scene-heading {
+    margin-top: 4px
+  }
+}
+
+@media(max-width:740px) {
+  /* Let the wide SVG remain at its designed scale and pan it inside the viewport. */
+  .stage-viewport {
+    overflow-x: auto;
+    overflow-y: hidden;
+    touch-action: pan-x;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-x: contain;
+    cursor: grab
+  }
+
+  .stage-viewport:active {
+    cursor: grabbing
+  }
+
+  .visual-stage {
+    width: 660px;
+    min-width: 660px;
+    max-width: none;
+    touch-action: pan-x
   }
 }
